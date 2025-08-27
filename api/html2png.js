@@ -1,10 +1,9 @@
-// Fuerza Node runtime (no Edge)
+// Fuerza Node (no Edge) desde el archivo
 export const config = { runtime: 'nodejs20.x' };
 
 import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer-core";
 
-// Recomendado por Sparticuz en serverless
 chromium.setHeadlessMode = true;
 chromium.setGraphicsMode = false;
 
@@ -30,14 +29,13 @@ export default async function handler(req, res) {
       scale = 1,
       fullPage = false,
       waitUntil = "networkidle0",
-      format = "json",       // "json" | "png"
-      omitBackground = true  // transparente
+      format = "json",
+      omitBackground = true
     } = input || {};
 
     if (!html && !url) return deny("Provide 'html' or 'url'", res, 400);
 
     const executablePath = await chromium.executablePath();
-
     const browser = await puppeteer.launch({
       args: [
         ...chromium.args,
